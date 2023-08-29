@@ -8,10 +8,10 @@ on:
   workflow_dispatch: {}
   # Scan mainline branches and report all findings:
   push:
-    branches: ["master", "main"]
+    branches: ["master"]
   # Schedule the CI job (this method uses cron syntax):
   schedule:
-    - cron: '20 17 * * *' # Sets Semgrep to scan every day at 17:20 UTC.
+    - cron: '21 15 * * *' # Sets Semgrep to scan every day
     # It is recommended to change the schedule to a random time.
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
       # Fetch project source with GitHub Actions Checkout.
       - uses: actions/checkout@v3
       # Run the "semgrep ci" command on the command line of the docker image.
-      - run: semgrep ci
+      - run: semgrep ci --include=bin/* --include=ext/* --include=lib/*
         env:
           # Add the rules that Semgrep uses by setting the SEMGREP_RULES environment variable.
           SEMGREP_RULES: p/ruby
